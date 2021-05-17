@@ -26,3 +26,4 @@ jobs:
           name: helm-acceptance-testing-report-${{ github.sha }}
           path: acceptance-testing-reports/${{ github.sha }}/
         if: always()
+
