@@ -18,10 +18,11 @@ Documentation     Verify helm works properly with registries.
 ...
 Library           OperatingSystem
 Library           ../lib/Sh.py
+Suite Setup       Check for required environment variables
 
 *** Test Cases ***
 Able to "helm registry login" to a registry
-    Should pass  helm version
+    Should pass  set +x && echo %{REGISTRY_PASSWORD} | helm registry login %{REGISTRY_ROOT_URL} -u %{REGISTRY_USERNAME} --password-stdin
 
 Able to "helm push" charts to a registry
     Should pass  helm version
@@ -42,4 +43,12 @@ Able to "helm dep update" using charts from a registry
     Should pass  helm version
 
 Able to "helm registry logout" from a registry
-    Should pass  helm version
+    Should pass  helm registry logout %{REGISTRY_ROOT_URL}
+
+*** Keyword ***
+Check for required environment variables
+    Get Environment Variable  REGISTRY_ROOT_URL
+    Get Environment Variable  REGISTRY_NAMESPACE
+    Get Environment Variable  REGISTRY_USERNAME
+    Get Environment Variable  REGISTRY_PASSWORD
+
