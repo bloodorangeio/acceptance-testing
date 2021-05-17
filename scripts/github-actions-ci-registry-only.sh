@@ -14,6 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Install virtualenv
+which virtualenv || true
+pip3 install --user virtualenv
+virtualenv --version
+which virtualenv
+
 rm -rf bin/
 mkdir -p bin/
 export PATH="${PWD}/bin:${HOME}/.local/bin:${PATH}"
