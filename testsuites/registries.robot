@@ -31,6 +31,8 @@ Able to "helm push" charts to a registry
     Should pass  helm push nginx-0.1.0.tgz oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}
 
 Able to "helm pull" charts from a registry
+    Should fail  helm pull oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.1.1
+    Should fail  ls nginx-0.1.1.tgz
     Should fail  rm -f nginx-0.1.0.tgz && ls nginx-0.1.0.tgz
     Should pass  helm pull oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.1.0
     Should pass  ls nginx-0.1.0.tgz
