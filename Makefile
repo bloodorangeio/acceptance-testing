@@ -8,6 +8,10 @@ acceptance:
 github-actions-ci:
 	@scripts/github-actions-ci.sh
 
+.PHONY: github-actions-ci-registry-only
+github-actions-ci-registry-only:
+	@scripts/github-actions-ci-registry-only.sh
+
 .PHONY: github-actions-ci-local
 github-actions-ci-local:
 	docker run -it --rm \
