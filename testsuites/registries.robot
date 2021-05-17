@@ -22,6 +22,7 @@ Suite Setup       Check for required environment variables
 
 *** Test Cases ***
 Able to "helm registry login" to a registry
+    Should fail  echo fakepassword123 | helm registry login %{REGISTRY_ROOT_URL} -u %{REGISTRY_USERNAME} --password-stdin
     Should pass  set +x && echo %{REGISTRY_PASSWORD} | helm registry login %{REGISTRY_ROOT_URL} -u %{REGISTRY_USERNAME} --password-stdin
 
 Able to "helm push" charts to a registry
