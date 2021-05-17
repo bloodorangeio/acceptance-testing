@@ -26,16 +26,22 @@ Able to "helm registry login" to a registry
     Should pass  set +x && echo %{REGISTRY_PASSWORD} | helm registry login %{REGISTRY_ROOT_URL} -u %{REGISTRY_USERNAME} --password-stdin
 
 Able to "helm push" charts to a registry
-    Should pass  helm version
+    Should pass  helm package testdata/charts/nginx
+    #Should fail  helm push nginx-0.1.0.tgz oci://%{REGISTRY_ROOT_URL}/badroot/%{REGISTRY_NAMESPACE}
+    Should pass  helm push nginx-0.1.0.tgz oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}
 
 Able to "helm pull" charts from a registry
-    Should pass  helm version
+    Should fail  rm -f nginx-0.1.0.tgz && ls nginx-0.1.0.tgz
+    Should pass  helm pull oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.1.0
+    Should pass  ls nginx-0.1.0.tgz
 
 Able to "helm install" using charts from a registry
-    Should pass  helm version
+    Should fail  rm -f nginx-0.1.0.tgz && ls nginx-0.1.0.tgz
+    Should pass  helm install nginx oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.1.0 --dry-run --debug
 
 Able to "helm upgrade" using charts from a registry
-    Should pass  helm version
+    Should fail  rm -f nginx-0.1.0.tgz && ls nginx-0.1.0.tgz
+    Should pass  helm upgrade nginx oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.1.0 --dry-run --debug
 
 Able to "helm dep build" using charts from a registry
     Should pass  helm version

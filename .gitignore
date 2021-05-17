@@ -3,3 +3,5 @@
 
 acceptance-testing-reports/
 bin/
+
+*.tgz
