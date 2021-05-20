@@ -43,3 +43,16 @@ class Sh(common.CommandRunner):
     def should_fail(self, cmd):
         self.Run(cmd)
         self.return_code_should_not_be(0)
+
+    def should_pass_or_contain_output(self, cmd, s):
+        self.Run(cmd)
+        try:
+            self.return_code_should_be(0)
+        except Exception as e:
+            print(e)
+            self.output_contains(s)
+
+    def should_fail_and_not_contain_output(self, cmd, s):
+        self.Run(cmd)
+        self.return_code_should_not_be(0)
+        self.output_does_not_contain(s)

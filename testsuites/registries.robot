@@ -42,13 +42,22 @@ Able to "helm pull" charts from a registry
     Should pass  helm pull oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.1.0
     Should pass  ls nginx-0.1.0.tgz
 
+Able to "helm show" using charts from a registry
+    Should pass  helm show all oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.1.0
+    Should fail  helm show all oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.2.0
+
+Able to "helm template" using charts from a registry
+    Should pass  helm template nginx oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.1.0
+    Should fail  helm template nginx oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.2.0
+
 Able to "helm install" using charts from a registry
-    Should fail  rm -f nginx-0.1.0.tgz && ls nginx-0.1.0.tgz
-    Should pass  echo TODO helm install nginx oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.1.0 --dry-run --debug
+    Should pass or contain output  helm install nginx oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.1.0 --dry-run  Kubernetes cluster unreachable
+    Should fail and not contain output  helm install nginx oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.2.0 --dry-run  Kubernetes cluster unreachable
 
 Able to "helm upgrade" using charts from a registry
-    Should fail  rm -f nginx-0.1.0.tgz && ls nginx-0.1.0.tgz
-    Should pass  echo TODO helm upgrade nginx oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.1.1 --dry-run --debug
+    Should pass or contain output  helm upgrade --install nginx oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.1.1 --dry-run  Kubernetes cluster unreachable
+    # TODO: helm upgrade introspects cluster, so hard to test without one
+    #Should fail and not contain output  helm upgrade --install nginx oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.2.0 --dry-run  Kubernetes cluster unreachable
 
 Able to "helm dep build" using charts from a registry
     Should pass  rm -rf testdata/charts/mychart && helm create testdata/charts/mychart
