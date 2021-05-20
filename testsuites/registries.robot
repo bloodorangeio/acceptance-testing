@@ -35,8 +35,8 @@ Able to "helm push" charts to a registry
 Able to "helm push" charts to a registry (with prov)
     Should pass  rm -f nginx-0.1.2.tgz nginx-0.1.2.tgz.prov
     Should pass  helm package testdata/charts/nginx --version 0.1.2 --sign --key helm-test --keyring testdata/pgp/helm-test-key.secret
-    Should pass  ls nginx-0.1.2.tgz
-    Should pass  ls nginx-0.1.2.tgz.prov
+    Should pass  ls nginx-0.1.2.tgz nginx-0.1.2.tgz.prov
+    Should pass  helm verify --keyring testdata/pgp/helm-test-key.secret nginx-0.1.2.tgz
     Should pass  helm push --with-prov nginx-0.1.2.tgz oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}
 
 Able to "helm pull" charts from a registry
@@ -51,6 +51,16 @@ Able to "helm pull" charts from a registry
     Should fail  rm -f nginx-0.1.0.tgz && ls nginx-0.1.0.tgz
     Should pass  helm pull oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.1.0
     Should pass  ls nginx-0.1.0.tgz
+
+Able to "helm pull" charts from a registry (with prov)
+    Should fail  rm -f nginx-0.1.0.tgz nginx-0.1.0.tgz.prov && ls nginx-0.1.0.tgz nginx-0.1.0.tgz.prov
+    Should fail  helm pull --verify --keyring testdata/pgp/helm-test-key.secret oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.1.0
+    Should fail  ls nginx-0.1.0.tgz nginx-0.1.0.tgz.prov
+    Should pass  helm verify --keyring testdata/pgp/helm-test-key.secret nginx-0.1.2.tgz
+    Should fail  rm -f nginx-0.1.2.tgz nginx-0.1.2.tgz.prov && ls nginx-0.1.2.tgz nginx-0.1.2.tgz.prov
+    Should pass  helm pull --verify --keyring testdata/pgp/helm-test-key.secret oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.1.2
+    Should pass  ls nginx-0.1.2.tgz nginx-0.1.2.tgz.prov
+    Should pass  helm verify --keyring testdata/pgp/helm-test-key.secret nginx-0.1.2.tgz
 
 Able to "helm show" using charts from a registry
     Should pass  helm show all oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.1.0
@@ -97,4 +107,3 @@ Check for required environment variables
     Get Environment Variable  REGISTRY_NAMESPACE
     Get Environment Variable  REGISTRY_USERNAME
     Get Environment Variable  REGISTRY_PASSWORD
-
