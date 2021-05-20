@@ -32,12 +32,22 @@ Able to "helm push" charts to a registry
     Should pass  helm package testdata/charts/nginx --version 0.1.1
     Should pass  helm push nginx-0.1.1.tgz oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}
 
+Able to "helm push" charts to a registry (with prov)
+    Should pass  rm -f nginx-0.1.2.tgz nginx-0.1.2.tgz.prov
+    Should pass  helm package testdata/charts/nginx --version 0.1.2 --sign --key helm-test --keyring testdata/pgp/helm-test-key.secret
+    Should pass  ls nginx-0.1.2.tgz
+    Should pass  ls nginx-0.1.2.tgz.prov
+    Should pass  helm push --with-prov nginx-0.1.2.tgz oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}
+
 Able to "helm pull" charts from a registry
     Should fail  helm pull oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.2.0
     Should fail  ls nginx-0.2.0.tgz
     Should fail  rm -f nginx-0.1.1.tgz && ls nginx-0.1.1.tgz
     Should pass  helm pull oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.1.1
     Should pass  ls nginx-0.1.1.tgz
+    Should fail  rm -f nginx-0.1.2.tgz && ls nginx-0.1.2.tgz
+    Should pass  helm pull oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.1.2
+    Should pass  ls nginx-0.1.2.tgz
     Should fail  rm -f nginx-0.1.0.tgz && ls nginx-0.1.0.tgz
     Should pass  helm pull oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.1.0
     Should pass  ls nginx-0.1.0.tgz

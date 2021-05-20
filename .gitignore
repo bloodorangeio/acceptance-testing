@@ -5,4 +5,5 @@ acceptance-testing-reports/
 bin/
 
 *.tgz
+*.tgz.prov
 testdata/charts/mychart/
