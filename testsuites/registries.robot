@@ -45,9 +45,10 @@ Able to "helm pull" charts from a registry
     Should fail  rm -f nginx-0.1.1.tgz && ls nginx-0.1.1.tgz
     Should pass  helm pull oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.1.1
     Should pass  ls nginx-0.1.1.tgz
-    Should fail  rm -f nginx-0.1.2.tgz && ls nginx-0.1.2.tgz
+    Should fail  rm -f nginx-0.1.2.tgz nginx-0.1.2.tgz.prov && ls nginx-0.1.2.tgz nginx-0.1.2.tgz.prov
     Should pass  helm pull oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.1.2
     Should pass  ls nginx-0.1.2.tgz
+    Should fail  ls nginx-0.1.2.tgz.prov
     Should fail  rm -f nginx-0.1.0.tgz && ls nginx-0.1.0.tgz
     Should pass  helm pull oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.1.0
     Should pass  ls nginx-0.1.0.tgz
@@ -55,8 +56,8 @@ Able to "helm pull" charts from a registry
 Able to "helm pull" charts from a registry (with prov)
     Should fail  rm -f nginx-0.1.0.tgz nginx-0.1.0.tgz.prov && ls nginx-0.1.0.tgz nginx-0.1.0.tgz.prov
     Should fail  helm pull --verify --keyring testdata/pgp/helm-test-key.secret oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.1.0
-    Should fail  ls nginx-0.1.0.tgz nginx-0.1.0.tgz.prov
-    Should pass  helm verify --keyring testdata/pgp/helm-test-key.secret nginx-0.1.2.tgz
+    Should pass  ls nginx-0.1.0.tgz
+    Should fail  ls nginx-0.1.0.tgz.prov
     Should fail  rm -f nginx-0.1.2.tgz nginx-0.1.2.tgz.prov && ls nginx-0.1.2.tgz nginx-0.1.2.tgz.prov
     Should pass  helm pull --verify --keyring testdata/pgp/helm-test-key.secret oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.1.2
     Should pass  ls nginx-0.1.2.tgz nginx-0.1.2.tgz.prov
