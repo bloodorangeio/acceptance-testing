@@ -157,3 +157,4 @@ The test run is wrapped by [acceptance.sh](./scripts/acceptance.sh) -
 in this file the environment is validated (i.e. check if required tools present). 
 If any additional Python libraries are required for a new library, 
 it can be appended to `ROBOT_PY_REQUIRES`.
+
