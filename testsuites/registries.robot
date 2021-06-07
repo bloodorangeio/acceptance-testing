@@ -109,3 +109,4 @@ Check for required environment variables
     Get Environment Variable  REGISTRY_USERNAME
     Get Environment Variable  REGISTRY_PASSWORD
     Set Environment Variable  KUBECONFIG  testdata/kube/empty-kubeconfig.yaml
+    Set Environment Variable  HELM_EXPERIMENTAL_OCI  1
