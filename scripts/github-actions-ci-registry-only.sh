@@ -29,7 +29,7 @@ export GITHUB_SHA="${GITHUB_SHA:-latest}"
 which helm || true
 mkdir -p /tmp/gopath/src/helm.sh
 pushd /tmp/gopath/src/helm.sh
-git clone https://github.com/bloodorangeio/helm.git -b hip-6-push-cleanup
+git clone https://github.com/bloodorangeio/helm.git -b hip-6
 pushd helm/
 GOPATH=/tmp/gopath make build
 popd
