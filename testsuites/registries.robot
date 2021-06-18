@@ -39,8 +39,8 @@ Able to "helm push" charts to a registry (with prov)
     Should pass  helm package testdata/charts/nginx --version 0.1.2 --sign --key helm-test --keyring testdata/pgp/helm-test-key.secret
     Should pass  ls nginx-0.1.2.tgz nginx-0.1.2.tgz.prov
     Should pass  helm verify --keyring testdata/pgp/helm-test-key.secret nginx-0.1.2.tgz
-    Should fail and contain output  unset HELM_EXPERIMENTAL_OCI && helm push --with-prov nginx-0.1.2.tgz oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}  Please set HELM_EXPERIMENTAL_OCI=1
-    Should pass  helm push --with-prov nginx-0.1.2.tgz oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}
+    Should fail and contain output  unset HELM_EXPERIMENTAL_OCI && helm push nginx-0.1.2.tgz oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}  Please set HELM_EXPERIMENTAL_OCI=1
+    Should pass  helm push nginx-0.1.2.tgz oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}
 
 Able to "helm pull" charts from a registry
     Should fail and contain output  unset HELM_EXPERIMENTAL_OCI && helm pull oci://%{REGISTRY_ROOT_URL}/%{REGISTRY_NAMESPACE}/nginx --version 0.1.1  Please set HELM_EXPERIMENTAL_OCI=1
